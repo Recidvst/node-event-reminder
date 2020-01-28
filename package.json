@@ -1,0 +1,28 @@
+{
+  "name": "node-event-reminder",
+  "version": "0.0.1",
+  "description": "Small node app running a cron to trigger event reminders by email and text.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Recidvst/node-event-reminder.git"
+  },
+  "homepage": "https://github.com/Recidvst/node-event-reminder#readme",
+  "author": "Chris Snowden <cdsnowden@gmail.com>",
+  "license": "GNU",
+  "dependencies": {
+    "express": "^4.17.1",
+    "forever": "^2.0.0",
+    "fs": "0.0.1-security",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.2",
+    "pm2": "^4.2.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "express-prettify": "^0.1.1"
+  }
+}

@@ -1,0 +1,73 @@
+// cron tasks
+const cron = require("node-cron");
+
+// require log function
+const createFile = require('./files');
+
+// check cron schedule validity
+const validator = (schedule) => {
+  return new Promise ((resolve, reject) => {
+    if (typeof schedule === undefined) reject('Must pass a cron schedule');
+    const valid = cron.validate(schedule);
+    if (valid) {
+      resolve();
+    }
+    else {
+      reject('Invalid cron schedule (' + schedule + ')');
+    }
+  });
+}
+
+// schedule tasks to be run on the server
+const minuteCron = () => {
+  const sched = " * * * * *";
+  validator(sched)
+  .then( () => { // if cron valid
+    cron.schedule(sched, function() {
+      console.log("running a task every minute");
+      createFile('logs/cron-log.txt', `Cron 'minuteCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
+    });
+  })
+  .catch( (err) => {
+    console.log(`Process terminated. Reason: ${err}`);
+    // kill process
+    process.exit(9);
+  })
+}
+
+const tenSecCron = () => {
+  const sched = "*/10 * * * * *";
+  validator(sched)
+  .then( () => { // if cron valid
+    cron.schedule(sched, function() {
+      console.log("running a task every 10 seconds");
+      createFile('logs/cron-log.txt', `Cron 'tenSecCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
+    });
+  })
+  .catch( (err) => {
+    console.log(`Process terminated. Reason: ${err}`);
+    // kill process
+    process.exit(9);
+  })
+}
+
+const testErrorCron = () => {
+  const sched = "*/10 * asds* '* *//1 *";
+  validator(sched)
+  .then( () => { // if cron valid
+    cron.schedule(sched, function() {
+      createFile('logs/cron-log.txt', `Cron 'testErrorCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
+    });
+  })
+  .catch( (err) => {
+    console.log(`Process terminated. Reason: ${err}`);
+    // kill process
+    process.exit(9);
+  })
+}
+
+module.exports = {
+  minuteCron,
+  tenSecCron,
+  testErrorCron
+};
