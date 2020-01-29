@@ -7,6 +7,13 @@ require('dotenv').config();
 // cron tasks
 const crons = require('./crons');
 
+// twilio whatsapp integration
+const twilioFunctions = require('./twilio');
+if (twilioFunctions && typeof twilioFunctions === 'object') {
+  twilioFunctions.twilioSendWhatsApp('whatsapp test'); // whatsapp test
+  twilioFunctions.twilioSendSMS('sms test'); // SMS test
+}
+
 // register app and server
 app = express();
 var server = app.listen(3000, () => console.log('Server listening'));
@@ -18,7 +25,6 @@ app.use(pretty({ always: true, spaces: 2 }));
 if (crons && typeof crons === 'object') {
   crons.minuteCron();
   crons.tenSecCron();
-  // crons.testErrorCron();
 }
 else {
   server.close(() => {

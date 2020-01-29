@@ -51,7 +51,7 @@ const tenSecCron = () => {
   })
 }
 
-const testErrorCron = () => {
+const testErrorCron = () => { // schedule validation tester
   const sched = "*/10 * asds* '* *//1 *";
   validator(sched)
   .then( () => { // if cron valid
