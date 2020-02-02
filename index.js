@@ -4,14 +4,20 @@ const pretty = require('express-prettify');
 // config/env
 require('dotenv').config();
 
-// cron tasks
+// import action fns
 const crons = require('./crons');
+const twilio = require('./twilio');
+const mailer = require('./mailer');
 
-// twilio whatsapp integration
-const twilioFunctions = require('./twilio');
-if (twilioFunctions && typeof twilioFunctions === 'object') {
-  twilioFunctions.twilioSendWhatsApp('whatsapp test'); // whatsapp test
-  twilioFunctions.twilioSendSMS('sms test'); // SMS test
+// twilio whatsapp and sms integration
+if (twilio && typeof twilio === 'object') {
+  twilio.twilioSendWhatsApp('whatsapp test'); // whatsapp test
+  twilio.twilioSendSMS('sms test'); // SMS test
+}
+
+// send mail
+if (mailer && typeof mailer === 'object') {
+  mailer.sendMail('birthday', 'John Doe', 'John\'s birthday', Date.now());
 }
 
 // register app and server
