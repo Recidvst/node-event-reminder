@@ -11,13 +11,13 @@ const mailer = require('./mailer');
 
 // twilio whatsapp and sms integration
 if (twilio && typeof twilio === 'object') {
-  twilio.twilioSendWhatsApp('whatsapp test'); // whatsapp test
-  twilio.twilioSendSMS('sms test'); // SMS test
+  // twilio.twilioSendWhatsApp('whatsapp test'); // whatsapp test
+  // twilio.twilioSendSMS('sms test'); // SMS test
 }
 
 // send mail
 if (mailer && typeof mailer === 'object') {
-  mailer.sendMail('birthday', 'John Doe', 'John\'s birthday', Date.now());
+  // mailer.sendMail('birthday', 'John Doe', 'John\'s birthday', Date.now());
 }
 
 // register app and server
@@ -29,6 +29,7 @@ app.use(pretty({ always: true, spaces: 2 }));
 
 // call crons
 if (crons && typeof crons === 'object') {
+  // TODO: cron times to change from test times - move to once a day?
   crons.minuteCron();
   crons.tenSecCron();
 }

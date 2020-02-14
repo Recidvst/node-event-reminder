@@ -1,0 +1,22 @@
+{
+  "events": [
+    {
+      "type": "birthday",
+      "name": "Herman Melville",
+      "nickname": "Herman",
+      "date": "11/02"
+    },
+    {
+      "type": "birthday",
+      "name": "Captain Ahab",
+      "nickname": "Ahab",
+      "date": "17/08"
+    },
+    {
+      "type": "birthday",
+      "name": "Moby Dick",
+      "nickname": "The White Whale",
+      "date": "01/07"
+    }
+  ]
+}

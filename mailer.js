@@ -3,7 +3,7 @@ const MAILUSR = process.env.GMAILACCOUNT || false;
 const MAILPWD = process.env.GMAILPASSWORD || false;
 
 let nodemailer = require("nodemailer");
- 
+
 const sendMail = function(type, title, blurb, date) { // TODO use options object
   // TODO the message logic handled by a detached fn
   const eventTitle = title || '';
@@ -11,7 +11,7 @@ const sendMail = function(type, title, blurb, date) { // TODO use options object
   const eventDate = date || false;
   const tomorrowDate = Date.now(); // TODO with date-fns
   let eventWording = '';
-  
+
   switch(type) {
     // TODO add msg for non birthdays
     // case 'anniversary': // non-standard types
@@ -21,13 +21,13 @@ const sendMail = function(type, title, blurb, date) { // TODO use options object
         eventWording = `Don't forget ${eventTitle}'s birthday tomorrow!`;
       }
       else if (eventDate) {
-        eventWording = `Don't forget ${eventTitle}'s birthday on ${eventDate}`;        
+        eventWording = `Don't forget ${eventTitle}'s birthday on ${eventDate}`;
       }
       else {
-        eventWording = `Don't forget ${eventTitle}'s birthday is coming soon!`;        
+        eventWording = `Don't forget ${eventTitle}'s birthday is coming soon!`;
       }
   }
-  
+
  // Create a SMTP transporter object
  let mailer = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -39,7 +39,7 @@ const sendMail = function(type, title, blurb, date) { // TODO use options object
   },
   debug: true, // show debug output
  });
- 
+
  // Message object
  let message = {
   from: 'Event Reminder<event-reminder.`${MAILUSR}>`',
@@ -48,13 +48,13 @@ const sendMail = function(type, title, blurb, date) { // TODO use options object
   text: eventWording,
   html: `<p>${eventWording}</p>`
  };
- 
+
  mailer.sendMail(message, (err, info) => {
   if (err) {
     console.log('Error occurred. ' + err.message);
     return process.exit(1);
   }
-  
+
   console.log('Message sent: %s', info.response);
  });
 
