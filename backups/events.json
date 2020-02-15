@@ -1,0 +1,46 @@
+{
+  "events": [
+    {
+      "name": "Andrew Snowden",
+      "nickname": "Dad",
+      "blurb": "Dad's birthday",
+      "date": "17/04",
+      "type": "birthday"
+    },
+    {
+      "name": "Eleanor Snowden",
+      "nickname": "Mum",
+      "blurb": "Mums's birthday",
+      "date": "27/08",
+      "type": "birthday"
+    },
+    {
+      "name": "Mike Snowden",
+      "nickname": "Mike",
+      "blurb": "Mikes's birthday",
+      "date": "16/11",
+      "type": "birthday"
+    },
+    {
+      "name": "Harpreet Sihra",
+      "nickname": "H 💖",
+      "blurb": "H's birthday",
+      "date": "03/01",
+      "type": "birthday"
+    },
+    {
+      "name": "Our Anniversary",
+      "nickname": "Anniversary",
+      "blurb": "Me and H's anniversary",
+      "date": "11/11",
+      "type": "anniversary"
+    },
+    {
+      "name": "Valentine's Day",
+      "nickname": "Valentine's Day",
+      "blurb": "Valentine's Day",
+      "date": "14/02",
+      "type": "milestone"
+    }
+  ]
+}

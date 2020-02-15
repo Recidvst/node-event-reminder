@@ -73,8 +73,9 @@ typings/
 .env.test
 
 # personal data
-data/
+data/*
 source/*
+!data/data.example.json
 !source/data.example.json
 
 # parcel-bundler cache (https://parceljs.org/)

@@ -30,8 +30,8 @@ app.use(pretty({ always: true, spaces: 2 }));
 // call crons
 if (crons && typeof crons === 'object') {
   // TODO: cron times to change from test times - move to once a day?
-  crons.minuteCron();
-  crons.tenSecCron();
+  // crons.minuteCron();
+  // crons.tenSecCron();
 }
 else {
   server.close(() => {
@@ -40,5 +40,9 @@ else {
     // process.kill(process.pid, 'SIGTERM');
   })
 }
+
+// handle source file backups
+const watchBackupFolder = require('./backup');
+watchBackupFolder('./data');
 
 module.exports = app;
