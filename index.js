@@ -17,7 +17,13 @@ if (twilio && typeof twilio === 'object') {
 
 // send mail
 if (mailer && typeof mailer === 'object') {
-  // mailer.sendMail('birthday', 'John Doe', 'John\'s birthday', Date.now());
+  // mailer.sendMail({
+  //   type: 'birthday',
+  //   name: 'John Doe',
+  //   blurb: 'John Doe\'s 50th birthday',
+  //   useBlurb: false,
+  //   date: Date.now(),
+  // });
 }
 
 // register app and server

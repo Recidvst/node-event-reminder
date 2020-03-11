@@ -4,7 +4,10 @@
   "description": "Small node app running a cron to trigger event reminders by email and text.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch index.js",
+    "start": "NODE_ENV=production nohup forever index.js &",
+    "prod": "NODE_ENV=production pm2 start index.js -i max"
   },
   "repository": {
     "type": "git",
@@ -14,6 +17,7 @@
   "author": "Chris Snowden <cdsnowden@gmail.com>",
   "license": "GNU",
   "dependencies": {
+    "date-fns": "^2.10.0",
     "express": "^4.17.1",
     "forever": "^2.0.0",
     "fs": "0.0.1-security",
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "express-prettify": "^0.1.1"
+    "express-prettify": "^0.1.1",
+    "nodemon": "^2.0.2"
   }
 }

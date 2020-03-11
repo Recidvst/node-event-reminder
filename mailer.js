@@ -1,31 +1,51 @@
+const { format, isSameDay, addDays } = require('date-fns');
+const { locale } = require( 'date-fns/locale/en-GB');
+
 // env vars
 const MAILUSR = process.env.GMAILACCOUNT || false;
 const MAILPWD = process.env.GMAILPASSWORD || false;
 
 let nodemailer = require("nodemailer");
 
-const sendMail = function(type, title, blurb, date) { // TODO use options object
-  // TODO the message logic handled by a detached fn
-  const eventTitle = title || '';
-  const eventBlurb = blurb || '';
-  const eventDate = date || false;
-  const tomorrowDate = Date.now(); // TODO with date-fns
-  let eventWording = '';
+const sendMail = function(opts) {
+  if (opts === undefined || Object.keys(opts).length < 1) return false; // empty options obj
 
-  switch(type) {
-    // TODO add msg for non birthdays
-    // case 'anniversary': // non-standard types
-    //   break;
-    default: // birthday
-      if (eventDate === tomorrowDate) { // TODO with date-fns
-        eventWording = `Don't forget ${eventTitle}'s birthday tomorrow!`;
-      }
-      else if (eventDate) {
-        eventWording = `Don't forget ${eventTitle}'s birthday on ${eventDate}`;
-      }
-      else {
-        eventWording = `Don't forget ${eventTitle}'s birthday is coming soon!`;
-      }
+  const type = opts.type || 'birthday';
+  const useBlurb = opts.useBlurb || false;
+  const itemName = opts.name || '';
+  const eventBlurb = opts.blurb || '';
+  const eventDate = new Date(opts.date) || false;
+  const tomorrowDate = addDays(Date.now(), 1);
+
+  let subject = ''
+  let emoji = '';
+  let eventWording = '';
+  let eventInnerWording = '';
+
+  if (useBlurb) {
+    eventInnerWording = eventBlurb;
+    subject = eventBlurb;
+  } else {
+    if (type === 'birthday') {
+      eventInnerWording = `${itemName}'s birthday`;
+      subject = `${itemName}'s birthday 🎉`;
+      emoji = `🎂`;
+    } else {
+      eventInnerWording = `${itemName}`;
+      subject = `${itemName} 🍾`;
+      emoji = `🎊`;
+    }
+  }
+
+  // build up wording based on distance to event
+  if (isSameDay(eventDate, tomorrowDate)) {
+    eventWording = `Don't forget ${eventInnerWording} tomorrow! ${emoji}`;
+  }
+  else if (eventDate) {
+    eventWording = `Don't forget ${eventInnerWording} on ${format(eventDate, 'eee eo MMMM', {locale: locale})} (${format(eventDate, 'dd/MM/yyy', {locale: locale})})${emoji}`;
+  }
+  else {
+    eventWording = `Don't forget ${eventInnerWording} is coming soon! ${emoji}`;
   }
 
  // Create a SMTP transporter object
@@ -42,9 +62,9 @@ const sendMail = function(type, title, blurb, date) { // TODO use options object
 
  // Message object
  let message = {
-  from: 'Event Reminder<event-reminder.`${MAILUSR}>`',
+  from: `Event Reminder<${MAILUSR}>`,
   to: `<${MAILUSR}>`,
-  subject: `A reminder for ${eventBlurb}`,
+  subject: `📅 A reminder for ${subject}`,
   text: eventWording,
   html: `<p>${eventWording}</p>`
  };

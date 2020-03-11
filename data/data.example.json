@@ -4,18 +4,21 @@
       "type": "birthday",
       "name": "Herman Melville",
       "nickname": "Herman",
+      "blurb": "Herman Melville's birthday",
       "date": "11/02"
     },
     {
       "type": "birthday",
       "name": "Captain Ahab",
       "nickname": "Ahab",
+      "blurb": "Ahab's birthday",
       "date": "17/08"
     },
     {
       "type": "birthday",
       "name": "Moby Dick",
       "nickname": "The White Whale",
+      "blurb": "The White Whale's birthday",
       "date": "01/07"
     }
   ]
