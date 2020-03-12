@@ -42,7 +42,7 @@ const sendMail = function(opts) {
     eventWording = `Don't forget ${eventInnerWording} tomorrow! ${emoji}`;
   }
   else if (eventDate) {
-    eventWording = `Don't forget ${eventInnerWording} on ${format(eventDate, 'eee eo MMMM', {locale: locale})} (${format(eventDate, 'dd/MM/yyy', {locale: locale})})${emoji}`;
+    eventWording = `Don't forget ${eventInnerWording} on ${format(eventDate, 'eee eo MMMM', { locale })} (${format(eventDate, 'dd/MM/yyy', { locale })})${emoji}`;
   }
   else {
     eventWording = `Don't forget ${eventInnerWording} is coming soon! ${emoji}`;
