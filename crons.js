@@ -1,5 +1,6 @@
 // cron tasks
 const cron = require("node-cron");
+const triggerFn = require('./trigger');
 
 // require log function
 const createFile = require('./files');
@@ -19,13 +20,13 @@ const validator = (schedule) => {
 }
 
 // schedule tasks to be run on the server
-const minuteCron = () => {
-  const sched = " * * * * *";
+const dailyCron = () => {
+  const sched = "0 2 * * *";
   validator(sched)
   .then( () => { // if cron valid
     cron.schedule(sched, function() {
-      console.log("running a task every minute");
-      createFile('logs/cron-log.txt', `Cron 'minuteCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
+      triggerFn();
+      createFile('logs/cron-log.txt', `Cron 'dailyCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
     });
   })
   .catch( (err) => {
@@ -40,7 +41,7 @@ const tenSecCron = () => {
   validator(sched)
   .then( () => { // if cron valid
     cron.schedule(sched, function() {
-      console.log("running a task every 10 seconds");
+      triggerFn();
       createFile('logs/cron-log.txt', `Cron 'tenSecCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
     });
   })
@@ -67,7 +68,7 @@ const testErrorCron = () => { // schedule validation tester
 }
 
 module.exports = {
-  minuteCron,
+  dailyCron,
   tenSecCron,
   testErrorCron
 };
