@@ -1,31 +1,68 @@
 // backup json source files
 const fs = require("fs");
+const chokidar = require('chokidar');
 
 // watch data folder
 const watchBackupFolder = (folderPath) => {
-  fs.watch(folderPath, (eventType, filename) => {
-    console.log(eventType);
-    console.log(filename);
 
-    // if change seen then take a copy and append timestamp
-    if (eventType === 'change') {
-      // create a timestamp here to append to file
-      fs.stat(`${folderPath}/${filename}`, (err, stats) => {
+  // init chokidar watcher
+  chokidar.watch(folderPath).on('change', filepath => {
+    // if change seen
+    if (filepath) {
+
+      fs.stat(`${filepath}`, (err, stats) => {
         if (err) throw err;
-        const ts = stats.mtime;
-        // TODO: inject ts variable into filename (before .json)
-        fs.copyFileSync(`${folderPath}/${filename}`, `./backups/${filename}`, (err) => {
-          if (err) throw err;
-          console.log(`Backup made: ${filename} was moved to backups folder`);
+        // create a timestamp to append to file
+        const timestamp = new Date(stats.mtime).toISOString();
+        const timestampStripped = timestamp.replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, '');
+        let backupFilepath = `${filepath.split('.json').slice(0, -1).join('.')}-${timestampStripped}.json`;
+
+        // check backup data folder exists
+        fs.accessSync('./backups/data', (err) => {
+          if (err) {
+            fs.mkdirSync('./backups/data');
+          }
         });
 
+        // read file contents
+        const fileContents = fs.readFileSync(filepath, (err, data) => {
+          if (err) {
+            return false;
+          };
+          return data;
+        });
+
+        if (fileContents !== '' && fileContents !== false) {
+
+          // write new backup file
+          fs.writeFile(`./backups/${backupFilepath}`, fileContents, function(err) {
+            if(err) {
+              console.log(err);
+            }
+            console.log(`Backup made of ${filepath} in the backups folder`);
+
+            // check dir for max size
+            fs.readdir('./backups/data', (err, files) => {
+              // if too long (30+), remove oldest items
+              if (files.length >= 30) {
+                files.forEach(function(file, index) {
+                  if (index < files.length - 30) {
+                    fs.unlinkSync(`./backups/data/${file}`, (err) => {
+                      if (err) {
+                        console.log(err);
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          });
+        }
+
       });
+
     }
   });
 }
-
-// check backup folder space
-// if room (e.g. max 30 files or sth) then add file
-// else remove oldest file and add new one
 
 module.exports = watchBackupFolder;

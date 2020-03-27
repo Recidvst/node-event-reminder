@@ -76,9 +76,10 @@ typings/
 data/*
 source/*
 backups/*
-!data/data.example.json
-!source/data.example.json
-!backups/data.example.json
+!data/data-example.json
+!source/data-example.json
+!backups/data-example.json
+!backups/data/data-example.json
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

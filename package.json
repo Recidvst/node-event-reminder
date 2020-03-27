@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch index.js",
+    "dev": "nodemon --watch",
     "start": "NODE_ENV=production nohup forever index.js &",
     "prod": "NODE_ENV=production pm2 start index.js -i max"
   },
@@ -17,6 +17,7 @@
   "author": "Chris Snowden <cdsnowden@gmail.com>",
   "license": "GNU",
   "dependencies": {
+    "chokidar": "^3.3.1",
     "date-fns": "^2.10.0",
     "express": "^4.17.1",
     "forever": "^2.0.0",

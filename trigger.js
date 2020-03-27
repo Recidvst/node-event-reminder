@@ -6,7 +6,7 @@ const { locale } = require( 'date-fns/locale/en-GB');
 const twilio = require('./twilio');
 const mailer = require('./mailer');
 // data file
-const data = require('./data/data.example.json');
+const data = require('./data/data-example.json');
 
 // fired on cron run
 const triggerFn = () => {

@@ -16,7 +16,7 @@ app.use(pretty({ always: true, spaces: 2 }));
 
 // call crons
 if (crons && typeof crons === 'object') {
-  crons.dailyCron();
+  // crons.dailyCron();
   // crons.tenSecCron();
 }
 else {
