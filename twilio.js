@@ -29,7 +29,6 @@ const twilioSendWhatsApp = function(opts) {
         })
         .then( (response) => {
           if (response.errorCode) {
-            console.error(response.errorMessage);
             createFile('logs/twilio-log.txt', `WhatsApp Message with sid (${response.sid}) FAILED to send to ${masked} at: ${new Date().toISOString()}\r\n`); // update log file
           }
           else {
@@ -59,7 +58,6 @@ const twilioSendSMS = function(opts) {
         })
         .then( (response) => {
           if (response.errorCode) {
-            console.error(response.errorMessage);
             createFile('logs/twilio-log.txt', `SMS Message with sid (${response.sid}) FAILED to send to ${masked} at: ${new Date().toISOString()}\r\n`); // update log file
           }
           else {
