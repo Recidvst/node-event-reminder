@@ -71,6 +71,8 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+credentials.json
+token.json
 
 # personal data
 data/*

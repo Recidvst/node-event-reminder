@@ -3,30 +3,20 @@
     {
       "type": "birthday",
       "name": "Herman Melville",
-      "nickname": "Herman",
-      "blurb": null,
+      "description": "Herman Melville's birthday",
       "date": "13/03"
     },
     {
       "type": "birthday",
-      "name": "Captain Ahab",
-      "nickname": "Ahab",
-      "blurb": "Ahab's birthday",
-      "date": "14/03"
-    },
-    {
-      "type": "birthday",
       "name": "Moby Dick",
-      "nickname": "The White Whale",
-      "blurb": "The White Whale's birthday",
+      "description": "Moby Dick's birthday",
       "date": "20/04"
     },
     {
-      "type": "birthday",
-      "name": "Alice Liddell",
-      "nickname": "Alice in Wonderland",
-      "blurb": null,
-      "date": "13/07111112111123521111212"
+      "type": "reminder",
+      "name": "MOT",
+      "description": "MOT due for car",
+      "date": "14/03"
     }
   ]
 }
