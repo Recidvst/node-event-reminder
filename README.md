@@ -39,7 +39,6 @@ This was created largely for my use case so hasn't been developed as a configura
 ---
 
 ### TODO?
-- Tidy up triggering fn and better handle messaging
 - Deploy node app to a DO droplet
 - Add sentry to the node app for error tracking?
 - Add a basic auth-locked settings page to allow add/edit/delete of events. Nuxt?
