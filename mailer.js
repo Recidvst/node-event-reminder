@@ -1,6 +1,9 @@
 const { format, isSameDay, addDays } = require('date-fns');
 const { locale } = require( 'date-fns/locale/en-GB');
 
+// require log function
+const createFile = require('./files');
+
 // env vars
 const MAILUSR = process.env.GMAILACCOUNT || false;
 const MAILPWD = process.env.GMAILPASSWORD || false;
@@ -32,18 +35,17 @@ const sendMail = function(opts) {
     let message = {
       from: `Event Reminder<${MAILUSR}>`,
       to: `<${MAILUSR}>`,
-      subject: `📅 A reminder for ${subject}`,
+      subject: `${subject}`,
       text: eventWording,
       html: `<p>${eventWording}</p>`
     };
 
     mailer.sendMail(message, (err, info) => {
       if (err) {
-        console.log('Error occurred. ' + err.message);
+        createFile('logs/error-log.txt', `Nodemailer send failed. Reason: ${err.message} at: ${new Date().toISOString()}\r\n`); // update error log file
         return process.exit(1);
       }
 
-      console.log('Message sent: %s', info.response);
     });
   }
 

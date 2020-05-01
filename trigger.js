@@ -2,6 +2,8 @@
 const fs = require("fs");
 const { format, isSameDay, addDays, addMonths } = require('date-fns');
 const { locale } = require( 'date-fns/locale/en-GB');
+// require log function
+const createFile = require('./files');
 // env vars
 const DATASOURCE = process.env.DATASOURCE || false;
 // actions
@@ -35,18 +37,24 @@ const triggerFn = async () => {
     // loop over dates source file / filter it by date provided by cron
     if (data && data.length > 0) {
       data.forEach((event) => {
-        console.log('event');
-        console.log(event);
-        const eventDate = event.date || false;
+        let eventDate = false;
+        if (event.start && event.start.date) {
+          eventDate = event.start.date;
+        }
+        else {
+          eventDate = event.date || false;
+        }
         if (eventDate) {
-          const eventDateSplit = eventDate.split('/');
-          const eventDateWithYear = `2020/${eventDateSplit[1]}/${eventDateSplit[0]}`;
+          let eventDateWithYear = eventDate;
+          if (eventDate.indexOf('/') > -1) {
+            const eventDateSplit = eventDate.split('/');
+            eventDateWithYear = `2020/${eventDateSplit[1]}/${eventDateSplit[0]}`;
+          }
 
           let sendProto = {
             type: event.type || 'birthday',
             name: event.name || '',
-            blurb: event.blurb || '',
-            useBlurb: (event.blurb && event.blurb !== '') ? true : false,
+            description: event.description || '',
             date: eventDate,
             distanceType: 'month',
           }
@@ -55,7 +63,7 @@ const triggerFn = async () => {
           // same day
           if (isSameDay(new Date(eventDateWithYear), new Date(Date.now()))) {
             let sendOpts = sendProto || {};
-            sendOpts.distanceType = 'today'
+            sendOpts.distanceType = 'today';
             // send mail
             if (mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
@@ -68,7 +76,7 @@ const triggerFn = async () => {
           // next day
           if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 1))) {
             let sendOpts = sendProto || {};
-            sendOpts.distanceType = 'tomorrow'
+            sendOpts.distanceType = 'tomorrow';
             // send mail
             if (mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
@@ -81,7 +89,8 @@ const triggerFn = async () => {
           // one week
           if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 7))) {
             let sendOpts = sendProto || {};
-            sendOpts.distanceType = 'week'
+            sendOpts.distanceType = 'week';
+            sendOpts.date = eventDateWithYear;
             // send mail
             if (mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
@@ -94,7 +103,8 @@ const triggerFn = async () => {
           // one month
           if (isSameDay(new Date(eventDateWithYear), addMonths(Date.now(), 1))) {
             let sendOpts = sendProto || {};
-            sendOpts.distanceType = 'month'
+            sendOpts.distanceType = 'month';
+            sendOpts.date = eventDateWithYear;
             // send mail
             if (mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
@@ -109,10 +119,8 @@ const triggerFn = async () => {
     }
   }
   catch(err) {
-    console.log(err);
+    createFile('logs/error-log.txt', `Crons trigger fn failsd. Reason: ${err} at: ${new Date().toISOString()}\r\n`); // update error log file
   }
 }
-
-triggerFn();
 
 module.exports = triggerFn;

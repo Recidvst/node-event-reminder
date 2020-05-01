@@ -16,14 +16,13 @@ app.use(pretty({ always: true, spaces: 2 }));
 
 // call crons
 if (crons && typeof crons === 'object') {
-  // crons.dailyCron();
-  // crons.tenSecCron();
+  crons.dailyCron();
 }
 else {
   server.close(() => {
     console.log('Crons not found. Process terminated.');
+    createFile('logs/error-log.txt', `Crons not found. Process terminated at: ${new Date().toISOString()}\r\n`); // update error log file
     process.exit(9);
-    // process.kill(process.pid, 'SIGTERM');
   })
 }
 

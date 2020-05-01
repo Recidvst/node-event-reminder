@@ -2,6 +2,9 @@
 const fs = require("fs");
 const chokidar = require('chokidar');
 
+// require log function
+const createFile = require('./files');
+
 // watch data folder
 const watchBackupFolder = (folderPath) => {
 
@@ -37,9 +40,8 @@ const watchBackupFolder = (folderPath) => {
           // write new backup file
           fs.writeFile(`./backups/${backupFilepath}`, fileContents, function(err) {
             if(err) {
-              console.log(err);
+              createFile('logs/error-log.txt', `Backup write task failed. Reason: ${err} at: ${new Date().toISOString()}\r\n`); // update error log file
             }
-            console.log(`Backup made of ${filepath} in the backups folder`);
 
             // check dir for max size
             fs.readdir('./backups/data', (err, files) => {
@@ -49,7 +51,7 @@ const watchBackupFolder = (folderPath) => {
                   if (index < files.length - 30) {
                     fs.unlinkSync(`./backups/data/${file}`, (err) => {
                       if (err) {
-                        console.log(err);
+                        createFile('logs/error-log.txt', `Backup cull task failed. Reason: ${err} at: ${new Date().toISOString()}\r\n`); // update error log file
                       }
                     });
                   }

@@ -6,51 +6,46 @@ const buildWording = (opts) => {
 
   if (opts === undefined || Object.keys(opts).length < 1) return false; // empty options obj
 
-  const type = opts.type || 'birthday';
-  const useBlurb = opts.useBlurb || false;
-  const itemName = opts.name || '';
-  const eventBlurb = opts.blurb || '';
-  const eventDate = new Date(opts.date) || false;
-  const distanceType = opts.distanceType || 'month';
+  const type = opts.type || 'standard';
+  const eventName = opts.summary || opts.name || '';
+  const eventDescription = opts.description || '';
+  const passedEmoji = opts.emoji || false;
+  let eventDate = opts.date || false;
+  if (eventDate) {
+    eventDate = new Date(eventDate);
+  }
+  const distanceType = opts.distanceType || 'week';
 
   let subject = ''
-  let emoji = '';
+  let bodyEmoji = '';
   let eventWording = '';
-  let eventInnerWording = '';
 
-  if (useBlurb) {
-    eventInnerWording = eventBlurb;
-    subject = eventBlurb;
+  if (type === 'birthday') {
+    subject = `🗓️🎁 A reminder for ${eventName}`;
+    bodyEmoji = passedEmoji || `⏰`;
   } else {
-    if (type === 'birthday') {
-      eventInnerWording = `${itemName}'s birthday`;
-      subject = `${itemName}'s birthday 🎉`;
-      emoji = `🎂`;
-    } else {
-      eventInnerWording = `${itemName}`;
-      subject = `${itemName} 🍾`;
-      emoji = `🎊`;
-    }
+    subject = `🗓️ A reminder for ${eventName}`;
+    bodyEmoji = passedEmoji || `⏰`;
   }
 
   // build up wording based on distance to event
   if (distanceType === 'today') {
-    eventWording = `Don't forget that it's ${eventInnerWording} today! ${emoji}`;
+    eventWording = `${bodyEmoji} Don't forget that today is "${eventDescription}"`;
   }
   else if (distanceType === 'tomorrow') {
-    eventWording = `Don't forget ${eventInnerWording} tomorrow! ${emoji}`;
+    eventWording = `${bodyEmoji} Don't forget that tomorrow is "${eventDescription}"`;
   }
   else if (distanceType === 'week' && eventDate) {
-    eventWording = `Don't forget ${eventInnerWording} on ${format(eventDate, 'E do MMMM', { locale })} (${format(eventDate, 'dd/MM/yyy', { locale })})${emoji}`;
+    eventWording = `${bodyEmoji} Don't forget that "${eventDescription}" is happening on ${format(eventDate, 'E do MMMM', { locale })} (${format(eventDate, 'dd/MM/yyy', { locale })})`;
   }
-  else if (distanceType === 'month') {
-    eventWording = `Don't forget ${eventInnerWording} is coming soon! ${emoji}`;
+  else if (distanceType === 'month' && eventDate) {
+    eventWording = `${bodyEmoji} Don't forget that "${eventDescription}" is happening on ${format(eventDate, 'E do MMMM', { locale })} (${format(eventDate, 'dd/MM/yyy', { locale })})`;
   }
 
   return {
     eventWording,
     subject,
-    emoji,
+    bodyEmoji,
   };
 
 }

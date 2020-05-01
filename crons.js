@@ -21,16 +21,17 @@ const validator = (schedule) => {
 
 // schedule tasks to be run on the server
 const dailyCron = () => {
-  const sched = "0 10 * * *";
+  const sched = "0 12 * * *";
   validator(sched)
   .then( () => { // if cron valid
     cron.schedule(sched, function() {
+      console.log('RAN');
       triggerFn();
       createFile('logs/cron-log.txt', `Cron 'dailyCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
     });
   })
   .catch( (err) => {
-    console.log(`Process terminated. Reason: ${err}`);
+    createFile('logs/error-log.txt', `Process terminated. Reason: ${err} at: ${new Date().toISOString()}\r\n`); // update error log file
     // kill process
     process.exit(9);
   })
@@ -46,7 +47,7 @@ const tenSecCron = () => {
     });
   })
   .catch( (err) => {
-    console.log(`Process terminated. Reason: ${err}`);
+    createFile('logs/error-log.txt', `Process terminated. Reason: ${err} at: ${new Date().toISOString()}\r\n`); // update error log file
     // kill process
     process.exit(9);
   })
@@ -61,7 +62,7 @@ const testErrorCron = () => { // schedule validation tester
     });
   })
   .catch( (err) => {
-    console.log(`Process terminated. Reason: ${err}`);
+    createFile('logs/error-log.txt', `Process terminated. Reason: ${err} at: ${new Date().toISOString()}\r\n`); // update error log file
     // kill process
     process.exit(9);
   })

@@ -2,21 +2,24 @@
   "events": [
     {
       "type": "birthday",
-      "name": "Herman Melville",
-      "description": "Herman Melville's birthday",
-      "date": "13/03"
+      "name": "Ahabs's birthday",
+      "description": "Ahabs's birthday party aboard the Pequod",
+      "emoji": "",
+      "date": "01/03"
     },
     {
       "type": "birthday",
-      "name": "Moby Dick",
-      "description": "Moby Dick's birthday",
-      "date": "20/04"
+      "name": "Moby Dick's birthday",
+      "description": "Moby Dick's birthday party in the Pacific Ocean",
+      "emoji": "🐳",
+      "date": "02/03"
     },
     {
-      "type": "reminder",
+      "type": "standard",
       "name": "MOT",
       "description": "MOT due for car",
-      "date": "14/03"
+      "emoji": "🚗",
+      "date": "08/05"
     }
   ]
 }

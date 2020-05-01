@@ -33,7 +33,6 @@ const twilioSendWhatsApp = function(opts) {
           }
           else {
             let masked = receiverNumber.substr(0, receiverNumber.length - 5) + '*****';
-            console.log(`WhatsApp message with sid (${response.sid}) sent to ${masked}`);
             createFile('logs/twilio-log.txt', `WhatsApp Message with sid (${response.sid}) sent to ${masked} at: ${new Date().toISOString()}\r\n`); // update log file
           }
         })
@@ -62,7 +61,6 @@ const twilioSendSMS = function(opts) {
           }
           else {
             let masked = receiverNumber.substr(0, receiverNumber.length - 5) + '*****';
-            console.log(`SMS message with sid (${response.sid}) sent to ${masked}`);
             createFile('logs/twilio-log.txt', `SMS message with sid (${response.sid}) sent to ${masked} at: ${new Date().toISOString()}\r\n`); // update log file
           }
         })
