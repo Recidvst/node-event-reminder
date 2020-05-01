@@ -55,6 +55,7 @@ const triggerFn = async () => {
             type: event.type || 'birthday',
             name: event.name || '',
             description: event.description || '',
+            emoji: event.emoji || '',
             date: eventDate,
             distanceType: 'month',
           }
@@ -74,18 +75,18 @@ const triggerFn = async () => {
             }
           }
           // next day
-          if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 1))) {
-            let sendOpts = sendProto || {};
-            sendOpts.distanceType = 'tomorrow';
-            // send mail
-            if (mailer && typeof mailer === 'object') {
-              mailer.sendMail(sendOpts);
-            }
-            // twilio messaging integration
-            if (twilio && typeof twilio === 'object') {
-              twilio.twilioSendSMS(sendOpts);
-            }
-          }
+          // if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 1))) {
+          //   let sendOpts = sendProto || {};
+          //   sendOpts.distanceType = 'tomorrow';
+          //   // send mail
+          //   if (mailer && typeof mailer === 'object') {
+          //     mailer.sendMail(sendOpts);
+          //   }
+          //   // twilio messaging integration
+          //   if (twilio && typeof twilio === 'object') {
+          //     twilio.twilioSendSMS(sendOpts);
+          //   }
+          // }
           // one week
           if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 7))) {
             let sendOpts = sendProto || {};

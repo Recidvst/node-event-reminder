@@ -21,11 +21,10 @@ const validator = (schedule) => {
 
 // schedule tasks to be run on the server
 const dailyCron = () => {
-  const sched = "40 11 * * *";
+  const sched = "0 10 * * *";
   validator(sched)
   .then( () => { // if cron valid
     cron.schedule(sched, function() {
-      console.log('RAN');
       triggerFn();
       createFile('logs/cron-log.txt', `Cron 'dailyCron' ran at: ${new Date().toISOString()}\r\n`); // update log file
     });
