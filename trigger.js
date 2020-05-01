@@ -38,8 +38,8 @@ const triggerFn = async () => {
     if (data && data.length > 0) {
       data.forEach((event) => {
         let eventDate = false;
-        if (event.start && event.start.date) {
-          eventDate = event.start.date;
+        if (event.start) {
+          eventDate = event.start.date || event.start.dateTime;
         }
         else {
           eventDate = event.date || false;
@@ -52,8 +52,8 @@ const triggerFn = async () => {
           }
 
           let sendProto = {
-            type: event.type || 'birthday',
-            name: event.name || '',
+            type: event.type || 'standard',
+            name: event.summary || event.name || '',
             description: event.description || '',
             emoji: event.emoji || '',
             date: eventDate,
