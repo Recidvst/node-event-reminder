@@ -1,18 +1,39 @@
 // basics
 const express = require("express");
-const pretty = require('express-prettify');
+// middleware
+const Sentry = require('@sentry/node');
+const SENTRY_DSN = process.env.SENTRY_DSN || false;
 // config/env
 require('dotenv').config();
+
+// error tracking
+if (process.env.NODE_ENV === 'production' && SENTRY_DSN) {
+  Sentry.init({ dsn: SENTRY_DSN });
+  Sentry.configureScope((scope) => {
+    scope.setUser({"username": "event-reminder-droplet"});
+  });
+}
 
 // import action fns
 const crons = require('./crons');
 
 // register app and server
-app = express();
-var server = app.listen(3000, () => console.log('Server listening'));
+const app = express();
 
-// middleware
-app.use(pretty({ always: true, spaces: 2 }));
+// sentry
+if (process.env.NODE_ENV === 'production' && SENTRY_DSN) {
+  app.use(Sentry.Handlers.requestHandler());
+}
+if (process.env.NODE_ENV === 'production' && SENTRY_DSN) {
+  app.use(Sentry.Handlers.errorHandler());
+  app.use(function onError(err, req, res, next) {
+    res.statusCode = 500;
+    res.end(res.sentry + '\n');
+  });
+}
+
+// server
+var server = app.listen(3000, () => console.log('Server listening'));
 
 // call crons
 if (crons && typeof crons === 'object') {
