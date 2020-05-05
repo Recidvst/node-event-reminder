@@ -21,7 +21,7 @@ const validator = (schedule) => {
 
 // schedule tasks to be run on the server
 const dailyCron = () => {
-  const sched = "46 11 * * *";
+  const sched = "00 10 * * *";
   validator(sched)
   .then( () => { // if cron valid
     cron.schedule(sched, function() {
