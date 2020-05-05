@@ -23,6 +23,7 @@ This was created largely for my use case so hasn't been developed as a configura
 - The Service Account needs to have access to your private calendar - share your calendar with the Service Account via the calendar itself.
 - A 'credentials.json' file is needed to authenticate with the Google Auth library used. You can find an example of what this should look like [here](https://github.com/googleapis/google-auth-library-nodejs#json-web-tokens "Google auth documentation - JWT"). You could also use ENV variables for this. Obviously remember to gitignore!
 - The Google documentation around auth isn't great, particularly when trying to authenticate server to server :/
+- Currently set up to only pull events from the calendar that include the string 'notifyme' somewhere. This can be easily changed!
 
 ### Local Data
 - As well as pulling from Google Calendar, the app can also pull from a local .json file. An example of the structure it requires is provided in `data-example.json`.

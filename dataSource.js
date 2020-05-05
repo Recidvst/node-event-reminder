@@ -2,7 +2,7 @@
 // get data from local json file or from google calendar
 
 // get local
-const localData = require('./data/data-example.json');
+const localData = require('./data/events.json');
 
 // get google
 let calendarData = [];

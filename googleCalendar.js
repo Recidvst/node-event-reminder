@@ -21,7 +21,7 @@ const getCalendarEvents = function(opts) {
   return new Promise(function(resolve, reject) {
     api.events.list({
       calendarId: calendarId,
-      q: 'nodenotify',
+      q: 'notifyme',
       timeMin: new Date().toISOString()
     }, function (err, res) {
       if (err) {

@@ -8,14 +8,14 @@ const createFile = require('./files');
 // source
 const DATASOURCE = process.env.DATASOURCE || false;
 // methods
-const NOTIFYBYTEXT = process.env.NOTIFYBYTEXT || false;
-const NOTIFYBYWHATSAPP = process.env.NOTIFYBYWHATSAPP || false;
-const NOTIFYBYEMAIL = process.env.NOTIFYBYEMAIL || false;
+const NOTIFYBYTEXT = (process.env.NOTIFYBYTEXT === 'true') || false;
+const NOTIFYBYWHATSAPP = (process.env.NOTIFYBYWHATSAPP === 'true') || false;
+const NOTIFYBYEMAIL = (process.env.NOTIFYBYEMAIL === 'true') || false;
 // intervals
-const CHECKTODAY = process.env.CHECKTODAY || false;
-const CHECKTOMORROW = process.env.CHECKTOMORROW || false;
-const CHECKWEEK = process.env.CHECKWEEK || false;
-const CHECKMONTH = process.env.CHECKMONTH || false;
+const CHECKTODAY = (process.env.CHECKTODAY === 'true') || false;
+const CHECKTOMORROW = (process.env.CHECKTOMORROW === 'true') || false;
+const CHECKWEEK = (process.env.CHECKWEEK === 'true') || false;
+const CHECKMONTH = (process.env.CHECKMONTH === 'true') || false;
 // actions
 const twilio = require('./twilio');
 const mailer = require('./mailer');
