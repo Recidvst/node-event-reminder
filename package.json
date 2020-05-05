@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch",
-    "start": "NODE_ENV=production nohup forever index.js &",
-    "prod": "NODE_ENV=production pm2 start index.js -i max --name 'event-reminder'"
+    "start": "cross-env NODE_ENV=production nohup forever index.js &",
+    "prod": "cross-env NODE_ENV=production pm2 start index.js -i max --name 'event-reminder'"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "dependencies": {
     "@sentry/node": "^5.15.5",
     "chokidar": "^3.3.1",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.10.0",
     "express": "^4.17.1",
     "forever": "^2.0.0",
