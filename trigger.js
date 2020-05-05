@@ -5,7 +5,17 @@ const { locale } = require( 'date-fns/locale/en-GB');
 // require log function
 const createFile = require('./files');
 // env vars
+// source
 const DATASOURCE = process.env.DATASOURCE || false;
+// methods
+const NOTIFYBYTEXT = process.env.NOTIFYBYTEXT || false;
+const NOTIFYBYWHATSAPP = process.env.NOTIFYBYWHATSAPP || false;
+const NOTIFYBYEMAIL = process.env.NOTIFYBYEMAIL || false;
+// intervals
+const CHECKTODAY = process.env.CHECKTODAY || false;
+const CHECKTOMORROW = process.env.CHECKTOMORROW || false;
+const CHECKWEEK = process.env.CHECKWEEK || false;
+const CHECKMONTH = process.env.CHECKMONTH || false;
 // actions
 const twilio = require('./twilio');
 const mailer = require('./mailer');
@@ -62,57 +72,69 @@ const triggerFn = async () => {
 
           // compare to cron times - if match found then trigger mail and message functionality for that date
           // same day
-          if (isSameDay(new Date(eventDateWithYear), new Date(Date.now()))) {
+          if (CHECKTODAY && isSameDay(new Date(eventDateWithYear), new Date(Date.now()))) {
             let sendOpts = sendProto || {};
             sendOpts.distanceType = 'today';
             // send mail
-            if (mailer && typeof mailer === 'object') {
+            if (NOTIFYBYEMAIL && mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
             }
             // twilio messaging integration
-            if (twilio && typeof twilio === 'object') {
+            if (NOTIFYBYTEXT && twilio && typeof twilio === 'object') {
               twilio.twilioSendSMS(sendOpts);
+            }
+            if (NOTIFYBYWHATSAPP && twilio && typeof twilio === 'object') {
+              twilio.twilioSendWhatsApp(sendOpts);
             }
           }
           // next day
-          // if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 1))) {
-          //   let sendOpts = sendProto || {};
-          //   sendOpts.distanceType = 'tomorrow';
-          //   // send mail
-          //   if (mailer && typeof mailer === 'object') {
-          //     mailer.sendMail(sendOpts);
-          //   }
-          //   // twilio messaging integration
-          //   if (twilio && typeof twilio === 'object') {
-          //     twilio.twilioSendSMS(sendOpts);
-          //   }
-          // }
+          if (CHECKTOMORROW && isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 1))) {
+            let sendOpts = sendProto || {};
+            sendOpts.distanceType = 'tomorrow';
+            // send mail
+            if (NOTIFYBYEMAIL && mailer && typeof mailer === 'object') {
+              mailer.sendMail(sendOpts);
+            }
+            // twilio messaging integration
+            if (NOTIFYBYTEXT && twilio && typeof twilio === 'object') {
+              twilio.twilioSendSMS(sendOpts);
+            }
+            if (NOTIFYBYWHATSAPP && twilio && typeof twilio === 'object') {
+              twilio.twilioSendWhatsApp(sendOpts);
+            }
+          }
           // one week
-          if (isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 7))) {
+          if (CHECKWEEK && isSameDay(new Date(eventDateWithYear), addDays(Date.now(), 7))) {
             let sendOpts = sendProto || {};
             sendOpts.distanceType = 'week';
             sendOpts.date = eventDateWithYear;
             // send mail
-            if (mailer && typeof mailer === 'object') {
+            if (NOTIFYBYEMAIL && mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
             }
             // twilio messaging integration
-            if (twilio && typeof twilio === 'object') {
+            if (NOTIFYBYTEXT && twilio && typeof twilio === 'object') {
               twilio.twilioSendSMS(sendOpts);
+            }
+            if (NOTIFYBYWHATSAPP && twilio && typeof twilio === 'object') {
+              twilio.twilioSendWhatsApp(sendOpts);
             }
           }
           // one month
-          if (isSameDay(new Date(eventDateWithYear), addMonths(Date.now(), 1))) {
+          if (CHECKMONTH && isSameDay(new Date(eventDateWithYear), addMonths(Date.now(), 1))) {
             let sendOpts = sendProto || {};
             sendOpts.distanceType = 'month';
             sendOpts.date = eventDateWithYear;
             // send mail
-            if (mailer && typeof mailer === 'object') {
+            if (NOTIFYBYEMAIL && mailer && typeof mailer === 'object') {
               mailer.sendMail(sendOpts);
             }
             // twilio messaging integration
-            if (twilio && typeof twilio === 'object') {
+            if (NOTIFYBYTEXT && twilio && typeof twilio === 'object') {
               twilio.twilioSendSMS(sendOpts);
+            }
+            if (NOTIFYBYWHATSAPP && twilio && typeof twilio === 'object') {
+              twilio.twilioSendWhatsApp(sendOpts);
             }
           }
         }

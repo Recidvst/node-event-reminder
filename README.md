@@ -36,6 +36,10 @@ This was created largely for my use case so hasn't been developed as a configura
 ### Nodemailer
 - [Nodemailer](https://nodemailer.com/about/ "Nodemailer") needs to have an SMTP transporter object created. This could be something like Mailgun, SendGrid etc. but I am using [Gmail](https://support.google.com/a/answer/176600?hl=en "Using Gmail SMTP server"). For higher usage you would need a dedicated SMTP solution.
 
+### Environment variables
+- These are required for the 3rd party integrations and also to determine which combination of data source and services are used.
+- Please see `.env.example` for a list of the fields used.
+
 ---
 
 ### TODO?
