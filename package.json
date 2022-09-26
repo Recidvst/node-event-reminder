@@ -27,7 +27,7 @@
     "googleapis": "^49.0.0",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.2",
-    "pm2": "^4.2.3",
+    "pm2": "^5.2.0",
     "twilio": "^3.39.3"
   },
   "devDependencies": {
